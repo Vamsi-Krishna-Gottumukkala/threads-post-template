@@ -74,6 +74,9 @@ h2 { margin-bottom: 0; font-size: 18px; letter-spacing: 0; }
 
 .detail-row { padding-top: 24px; }
 .screen-time-field { width: min(270px, 64%); }
+.emoji-settings { display: flex; gap: 8px; margin-left: auto; }
+.emoji-field { width: 82px; }
+.emoji-field input { text-align: center; font-size: 18px; padding: 7px 5px; }
 .input-with-suffix { display: grid; grid-template-columns: 23px minmax(0, 1fr); align-items: center; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); padding-left: 11px; }
 .input-with-suffix input { border: 0; background: transparent; padding-left: 4px; }
 .text-button, .icon-button { border: 0; background: transparent; color: var(--muted); }
@@ -116,4 +119,7 @@ pre { margin: 0; color: var(--ink); white-space: pre-wrap; word-break: break-wor
   .habit-name { font-size: 14px; }
   .tracker-actions { gap: 6px; }
   .add-task { padding: 7px; font-size: 11px; }
+  .detail-row { flex-wrap: wrap; align-items: end; }
+  .screen-time-field { width: 100%; }
+  .emoji-settings { margin-left: 0; }
 }
