@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101010" />
+    <title>Daily Thread Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">365 day challenge</p>
+          <h1>Daily Thread Builder</h1>
+        </div>
+        <div class="account-area">
+          <p class="save-state" id="save-state">Checking account...</p>
+          <button class="account-button" id="open-auth" type="button">Sign in</button>
+          <button class="account-button sign-out" id="sign-out" type="button" hidden>Sign out</button>
+        </div>
+      </header>
+
+      <div id="app-content" hidden>
+      <section class="day-panel" aria-label="Post details">
+        <label class="field day-field">
+          <span>Day</span>
+          <input id="day-number" type="number" min="1" max="365" value="191" inputmode="numeric" />
+        </label>
+        <span class="day-divider">/</span>
+        <label class="field total-field">
+          <span>Challenge</span>
+          <input id="total-days" type="number" min="1" value="365" inputmode="numeric" />
+        </label>
+        <label class="field title-field">
+          <span>Title</span>
+          <input id="post-title" type="text" value="Self Improvement" maxlength="60" />
+        </label>
+      </section>
+
+      <div class="workspace">
+        <section class="tracker" aria-labelledby="tracker-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Today</p>
+              <h2 id="tracker-heading">Mark your wins</h2>
+            </div>
+            <div class="tracker-actions">
+              <p class="score-pill"><strong id="score-value">0</strong> / <span id="habit-count">15</span> done</p>
+              <button class="add-task" id="add-task" type="button">+ Add task</button>
+            </div>
+          </div>
+
+          <div class="habit-list" id="habit-list"></div>
+
+          <div class="detail-row">
+            <label class="field screen-time-field">
+              <span>Screen time</span>
+              <div class="input-with-suffix">
+                <span aria-hidden="true">📱</span>
+                <input id="screen-time" type="text" value="10hr 3m" maxlength="20" aria-label="Screen time" />
+              </div>
+            </label>
+            <button class="text-button" id="clear-day" type="button">Clear marks</button>
+          </div>
+        </section>
+
+        <aside class="preview-panel" aria-labelledby="preview-heading">
+          <div class="preview-heading">
+            <div>
+              <p class="eyebrow">Ready to post</p>
+              <h2 id="preview-heading">Threads preview</h2>
+            </div>
+            <button class="icon-button" id="reset-template" type="button" title="Reset template" aria-label="Reset template">↺</button>
+          </div>
+          <article class="post-preview" aria-live="polite">
+            <pre id="post-output"></pre>
+          </article>
+          <button class="copy-button" id="copy-post" type="button">
+            <span class="copy-symbol" aria-hidden="true">⧉</span>
+            <span id="copy-label">Copy post</span>
+          </button>
+          <p class="copy-note">Your settings stay on this device.</p>
+        </aside>
+      </div>
+      </div>
+    </main>
+    <dialog class="auth-dialog" id="auth-dialog">
+      <form class="auth-form" id="auth-form" method="dialog">
+        <div class="auth-heading">
+          <div>
+            <p class="eyebrow" id="auth-eyebrow">Member access</p>
+            <h2 id="auth-title">Sign in</h2>
+          </div>
+          <button class="icon-button" id="close-auth" type="button" aria-label="Close sign in">×</button>
+        </div>
+        <label class="field"><span>Email</span><input id="auth-email" type="email" autocomplete="email" required /></label>
+        <label class="field"><span>Password</span><input id="auth-password" type="password" autocomplete="current-password" minlength="6" required /></label>
+        <p class="auth-message" id="auth-message" role="status"></p>
+        <button class="copy-button" id="auth-submit" type="submit">Sign in</button>
+        <button class="auth-switch" id="auth-switch" type="button">New here? Create an account</button>
+      </form>
+    </dialog>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
