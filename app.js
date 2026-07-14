@@ -10,7 +10,7 @@ const defaultHabits = [
 ].map(([icon, name]) => ({ icon, name, done: false }));
 
 const storageKey = "daily-thread-builder";
-const fields = ["day-number", "total-days", "post-title", "screen-time", "done-emoji", "missed-emoji"];
+const fields = ["day-number", "total-days", "post-title", "hashtags", "screen-time", "done-emoji", "missed-emoji"];
 const $ = (id) => document.getElementById(id);
 const configured = !supabaseConfig.url.startsWith("YOUR_") && !supabaseConfig.anonKey.startsWith("YOUR_");
 const supabase = configured ? createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
@@ -130,12 +130,13 @@ function postText() {
   const day = $("day-number").value || "1";
   const total = $("total-days").value || "365";
   const title = $("post-title").value.trim() || "Self Improvement";
+  const hashtags = $("hashtags").value.trim();
   const doneEmoji = $("done-emoji").value.trim() || "✅";
   const missedEmoji = $("missed-emoji").value.trim() || "❌";
   const list = data.habits.map((habit) => `${habit.icon} ${habit.name} — ${habit.done ? doneEmoji : missedEmoji}`).join("\n");
   const score = data.habits.filter((habit) => habit.done).length;
   $("score-value").textContent = score;
-  return `Day ${day} / ${total} — ${title}\n\n${list}\n\n📱 Screen Time: ${$("screen-time").value.trim() || "—"}\n\nScore: ${score} / ${data.habits.length}\n\n#365daychallenge #selfimprovement`;
+  return `Day ${day} / ${total} — ${title}\n\n${list}\n\n📱 Screen Time: ${$("screen-time").value.trim() || "—"}\n\nScore: ${score} / ${data.habits.length}${hashtags ? `\n\n${hashtags}` : ""}`;
 }
 
 function updatePreview() { $("post-output").textContent = postText(); saveData(); }
@@ -197,7 +198,7 @@ $("clear-day").addEventListener("click", () => { data.habits.forEach((habit) => 
 $("reset-template").addEventListener("click", () => {
   data = { habits: cloneDefaults() };
   fields.forEach((id) => {
-    $(id).value = id === "day-number" ? "191" : id === "total-days" ? "365" : id === "post-title" ? "Self Improvement" : id === "done-emoji" ? "✅" : id === "missed-emoji" ? "❌" : "10hr 3m";
+    $(id).value = id === "day-number" ? "191" : id === "total-days" ? "365" : id === "post-title" ? "Self Improvement" : id === "hashtags" ? "#365daychallenge #selfimprovement" : id === "done-emoji" ? "✅" : id === "missed-emoji" ? "❌" : "10hr 3m";
   });
   renderHabits();
   updatePreview();

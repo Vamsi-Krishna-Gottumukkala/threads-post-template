@@ -44,6 +44,7 @@ h2 { margin-bottom: 0; font-size: 18px; letter-spacing: 0; }
 .field input { min-width: 0; width: 100%; border: 1px solid var(--line); border-radius: 5px; outline: none; background: var(--panel); color: var(--ink); padding: 11px 12px; font-size: 15px; font-weight: 700; transition: border-color .16s, background .16s; }
 .field input:focus { border-color: var(--yellow); background: #20201d; }
 .day-divider { align-self: end; padding: 0 0 11px; color: var(--muted); text-align: center; font-size: 18px; }
+.hashtags-field { grid-column: 1 / -1; }
 
 .workspace { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(340px, .75fr); gap: 48px; padding-top: 32px; align-items: start; }
 .section-heading, .preview-heading { margin-bottom: 18px; }
