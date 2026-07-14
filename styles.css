@@ -87,7 +87,7 @@ h2 { margin-bottom: 0; font-size: 18px; letter-spacing: 0; }
 
 .preview-panel { position: sticky; top: 22px; border-left: 1px solid var(--line); padding-left: 32px; }
 .post-preview { min-height: 467px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 22px; }
-pre { margin: 0; color: var(--ink); white-space: pre-wrap; word-break: break-word; font: 500 14px/1.68 Manrope, Arial, sans-serif; }
+pre { margin: 0; color: var(--ink); white-space: pre-wrap; word-break: break-word; user-select: text; -webkit-user-select: text; font: 500 14px/1.68 Manrope, Arial, sans-serif; }
 .copy-button { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; margin-top: 14px; border: 0; border-radius: 5px; background: var(--yellow); color: #201b0a; padding: 14px 18px; font-weight: 800; transition: transform .16s, background .16s; }
 .copy-button:hover { background: #ffda62; transform: translateY(-1px); }
 .copy-symbol { font-size: 20px; line-height: 0; }

@@ -203,20 +203,54 @@ $("reset-template").addEventListener("click", () => {
   updatePreview();
 });
 
+async function copyPostText(text) {
+  // Some mobile web views expose Clipboard but reject writes, so try each path.
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return "copied";
+    } catch { /* Fall through to the mobile-compatible method. */ }
+  }
+
+  const helper = document.createElement("textarea");
+  helper.value = text;
+  helper.setAttribute("readonly", "");
+  helper.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+  document.body.append(helper);
+  helper.focus();
+  helper.select();
+  helper.setSelectionRange(0, helper.value.length);
+  const copied = document.execCommand("copy");
+  helper.remove();
+  if (copied) return "copied";
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ text });
+      return "shared";
+    } catch (error) {
+      if (error.name === "AbortError") return "cancelled";
+    }
+  }
+  return "manual";
+}
+
+function selectPreviewText() {
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.selectNodeContents($("post-output"));
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
 $("copy-post").addEventListener("click", async () => {
   const label = $("copy-label");
-  try {
-    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(postText());
-    else {
-      const helper = document.createElement("textarea");
-      helper.value = postText(); helper.style.position = "fixed"; helper.style.opacity = "0";
-      document.body.append(helper); helper.select();
-      if (!document.execCommand("copy")) throw new Error("Copy unavailable");
-      helper.remove();
-    }
-    label.textContent = "Copied";
-    setTimeout(() => { label.textContent = "Copy post"; }, 1800);
-  } catch { label.textContent = "Select preview to copy"; setTimeout(() => { label.textContent = "Copy post"; }, 2200); }
+  const result = await copyPostText(postText());
+  if (result === "copied") label.textContent = "Copied";
+  if (result === "shared") label.textContent = "Choose Copy in share sheet";
+  if (result === "cancelled") label.textContent = "Copy canceled";
+  if (result === "manual") { selectPreviewText(); label.textContent = "Text selected - tap Copy"; }
+  setTimeout(() => { label.textContent = "Copy post"; }, result === "shared" ? 3500 : 2200);
 });
 
 $("open-auth").addEventListener("click", () => { setAuthMessage(""); $("auth-dialog").showModal(); });
